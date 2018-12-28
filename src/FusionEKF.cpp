@@ -32,7 +32,7 @@ FusionEKF::FusionEKF() {
               0, 0.0009, 0,
               0, 0, 0.09;
 
-  ekf_.Rl_ = R_laser_;
+  motionData_.Rl_ = R_laser_;
   motionData_.Rr_ = R_radar_;
 
   H_laser_ << 1, 0, 0, 0,
