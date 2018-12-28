@@ -8,7 +8,7 @@ set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
 set(sources src/main.cpp src/tools.cpp src/FusionEKF.cpp src/LidarPackage.cpp src/RadarPackage.cpp  
-    src/IKalmanFilter.cpp src/tools.h src/FusionEKF.h src/LidarPackage.h src/RadarPackage.h src/IKalmanFilter.h
+    src/IKalmanFilter.cpp src/tools.h src/FusionEKF.h src/LidarPackage.h src/RadarPackage.h src/IKalmanFilter.h src/MotionData.h
     )
 
 
