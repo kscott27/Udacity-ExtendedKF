@@ -88,9 +88,9 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
     if (sensorPack.sensor_type_ == MeasurementPackage::RADAR) {
       // TODO: Convert radar from polar to cartesian coordinates 
       //         and initialize state.
-      float rho = sensorPack.raw_measurements_[0];
-      float phi = sensorPack.raw_measurements_[1];
-      float rho_dot = sensorPack.raw_measurements_[2];
+      float rho = sensorPack.rawMeasurements_[0];
+      float phi = sensorPack.rawMeasurements_[1];
+      float rho_dot = sensorPack.rawMeasurements_[2];
       float px = rho * cos(phi);
       float py = rho * sin(phi);
       float vx = rho_dot * cos(phi);
@@ -100,8 +100,8 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
     }
     else if (sensorPack.sensor_type_ == MeasurementPackage::LASER) {
       // TODO: Initialize state.
-      motionData_.x_ << sensorPack.raw_measurements_[0],
-                 sensorPack.raw_measurements_[1],
+      motionData_.x_ << sensorPack.rawMeasurements_[0],
+                 sensorPack.rawMeasurements_[1],
                  0,
                  0;
     }
