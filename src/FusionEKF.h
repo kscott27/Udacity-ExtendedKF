@@ -48,6 +48,8 @@ class FusionEKF {
   // acceleration noise components
   float noise_ax_;
   float noise_ay_;
+
+  uint16_t runs_;
 };
 
 #endif // FusionEKF_H_
