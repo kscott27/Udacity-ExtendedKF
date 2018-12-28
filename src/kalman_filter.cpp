@@ -54,16 +54,16 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
    * TODO: update the state by using Extended Kalman Filter equations
    */  
-  // float px = 1;
-  // float py = 1;
-  // float vx = 1;
-  // float vy = 1;
-  // float rho = sqrt( px*px + py*py );
-  // float phi = atan2( py / px );
-  // float rho_dot = ( px*vx + py*vy ) / rho;
-  // VectorXd z_pred(3);
-  // z_pred << rho, phi, rho_dot;
-  // VectorXd y = z - z_pred;
+  float px = 1;
+  float py = 1;
+  float vx = 1;
+  float vy = 1;
+  float rho = sqrt( px*px + py*py );
+  float phi = atan2( py / px );
+  float rho_dot = ( px*vx + py*vy ) / rho;
+  VectorXd z_pred(3);
+  z_pred << rho, phi, rho_dot;
+  VectorXd y = z - z_pred;
 
   MatrixXd Hjt = H_.transpose();
   MatrixXd S = H_ * P_ * Hjt + R_;
@@ -72,8 +72,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   MatrixXd K = PHjt * Si;
 
   //new estimate
-  // x_ = x_ + (K * y);
-  // long x_size = x_.size();
-  // MatrixXd I = MatrixXd::Identity(x_size, x_size);
-  // P_ = (I - K * H_) * P_;
+  x_ = x_ + (K * y);
+  long x_size = x_.size();
+  MatrixXd I = MatrixXd::Identity(x_size, x_size);
+  P_ = (I - K * H_) * P_;
 }
