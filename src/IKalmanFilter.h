@@ -6,17 +6,17 @@
 #include "Eigen/Dense"
 #include "MotionData.h"
 
-class KalmanFilter {
+class IKalmanFilter {
  public:
   /**
    * Constructor
    */
-  KalmanFilter();
+  IKalmanFilter();
 
   /**
    * Destructor
    */
-  virtual ~KalmanFilter();
+  virtual ~IKalmanFilter();
 
   /**
    * Init Initializes Kalman filter
