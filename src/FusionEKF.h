@@ -6,8 +6,9 @@
 #include <vector>
 #include "Eigen/Dense"
 #include "kalman_filter.h"
-#include "measurement_package.h"
+#include "SensorPackage.h"
 #include "tools.h"
+#include "MotionData.h"
 
 class FusionEKF {
  public:
@@ -24,7 +25,9 @@ class FusionEKF {
   /**
    * Run the whole flow of the Kalman Filter from here.
    */
-  void ProcessMeasurement(const MeasurementPackage &measurement_pack);
+  void ProcessMeasurement( SensorPackage & sensorPack );
+
+  MotionData & getMotionData() const { return motionData_; }
 
   /**
    * Kalman Filter update and prediction math lives in here.
@@ -37,6 +40,9 @@ class FusionEKF {
 
   // previous timestamp
   long long previous_timestamp_;
+
+  // data object containing all matrices needed for kalman filter
+  MotionData motionData_;
 
   // tool object used to compute Jacobian and RMSE
   Tools tools;

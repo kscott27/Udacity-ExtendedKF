@@ -1,16 +1,20 @@
-#ifndef KALMAN_FILTER_H_
-#define KALMAN_FILTER_H_
+#ifndef EXTENDEDKALMANFILTER_H_
+#define EXTENDEDKALMANFILTER_H_
 
 #include <iostream>
 
+#include "Eigen/Dense"
 #include "IKalmanFilter.h"
+#include "tools.h"
 
-class KalmanFilter 
+class ExtendedKalmanFilter 
   : public IKalmanFilter
 {
  public:
-
-  inline KalmanFilter() { }
+  /**
+   * Constructor
+   */
+  inline ExtendedKalmanFilter() { }
 
   /**
    * Updates the state by using standard Kalman Filter equations
@@ -20,4 +24,4 @@ class KalmanFilter
 
 };
 
-#endif // KALMAN_FILTER_H_
+#endif // EXTENDEDKALMANFILTER_H_

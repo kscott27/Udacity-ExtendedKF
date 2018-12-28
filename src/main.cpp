@@ -4,6 +4,8 @@
 #include "json.hpp"
 #include "FusionEKF.h"
 #include "tools.h"
+#include "RadarPackage.h"
+#include "LidarPackage.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -59,7 +61,6 @@ int main() {
           // j[1] is the data JSON object
           string sensor_measurement = j[1]["sensor_measurement"];
           
-          MeasurementPackage meas_package;
           std::istringstream iss(sensor_measurement);
           
           long long timestamp;
@@ -69,6 +70,7 @@ int main() {
           iss >> sensor_type;
 
           if (sensor_type.compare("L") == 0) {
+            LidarPackage meas_package;
             meas_package.sensor_type_ = MeasurementPackage::LASER;
             meas_package.raw_measurements_ = VectorXd(2);
             float px;
@@ -79,6 +81,7 @@ int main() {
             iss >> timestamp;
             meas_package.timestamp_ = timestamp;
           } else if (sensor_type.compare("R") == 0) {
+            RadarPackage meas_package;
             meas_package.sensor_type_ = MeasurementPackage::RADAR;
             meas_package.raw_measurements_ = VectorXd(3);
             float ro;

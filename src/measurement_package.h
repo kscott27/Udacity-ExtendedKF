@@ -4,7 +4,7 @@
 #include "Eigen/Dense"
 
 class MeasurementPackage {
- public:
+public:
   enum SensorType{
     LASER,
     RADAR
@@ -12,7 +12,8 @@ class MeasurementPackage {
 
   long long timestamp_;
 
-  Eigen::VectorXd raw_measurements_;
+  Eigen::VectorXd rawMeasurements_;
+
 };
 
 #endif // MEASUREMENT_PACKAGE_H_
