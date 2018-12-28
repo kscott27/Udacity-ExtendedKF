@@ -3,6 +3,7 @@
 #include <iostream>
 #include "json.hpp"
 #include "FusionEKF.h"
+#include "MotionData.h"
 #include "tools.h"
 #include "RadarPackage.h"
 #include "LidarPackage.h"
@@ -37,6 +38,7 @@ int main() {
 
   // Create a Kalman Filter instance
   FusionEKF fusionEKF;
+  MotionData & md = fusionEKF.getMotionData();
 
   // used to compute the RMSE later
   Tools tools;
@@ -119,10 +121,10 @@ int main() {
 
           VectorXd estimate(4);
 
-          double p_x = fusionEKF.ekf_.x_(0);
-          double p_y = fusionEKF.ekf_.x_(1);
-          double v1  = fusionEKF.ekf_.x_(2);
-          double v2 = fusionEKF.ekf_.x_(3);
+          double p_x = md.x_(0);
+          double p_y = md.x_(1);
+          double v1  = md.x_(2);
+          double v2 = md.x_(3);
 
           estimate(0) = p_x;
           estimate(1) = p_y;
