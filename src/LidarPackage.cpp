@@ -1,9 +1,9 @@
-#include "kalman_filter.h"
+#include "LidarPackage.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-void KalmanFilter::updateState( MotionData & m ) {
+void LidarPackage::updateState( MotionData & m ) {
   /**
    * TODO: update the state by using Kalman Filter equations
    */

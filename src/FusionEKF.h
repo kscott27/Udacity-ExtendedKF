@@ -27,7 +27,7 @@ class FusionEKF {
    */
   void ProcessMeasurement( SensorPackage & sensorPack );
 
-  MotionData & getMotionData() const { return motionData_; }
+  const MotionData & getMotionData() const { return motionData_; }
 
   /**
    * Kalman Filter update and prediction math lives in here.

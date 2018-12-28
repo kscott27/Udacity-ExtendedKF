@@ -1,4 +1,4 @@
-#include "ExtendedKalmanFilter.h"
+#include "RadarPackage.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -8,7 +8,7 @@ using Eigen::VectorXd;
  *   VectorXd or MatrixXd objects with zeros upon creation.
  */
 
-void ExtendedKalmanFilter::updateState( MotionData & m ) {
+void RadarPackage::updateState( MotionData & m ) {
   float px = m.x_(0);
   float py = m.x_(1);
   float vx = m.x_(2);

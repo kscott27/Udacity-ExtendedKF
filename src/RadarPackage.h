@@ -2,15 +2,16 @@
 #define RADARPACKAGE_H_
 
 #include "SensorPackage.h"
-#include "ExtendedKalmanFilter.h"
+#include "IKalmanFilter.h"
 
 class RadarPackage 
-  : public SensorPackage,
-    public ExtendedKalmanFilter
+  : public SensorPackage
 {
 public:
   inline RadarPackage() { }
   virtual inline ~RadarPackage() { }
+
+  virtual void updateState( MotionData & m );
 };
 
 #endif // RADARPACKAGE_H_
