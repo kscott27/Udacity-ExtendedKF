@@ -28,11 +28,6 @@ class FusionEKF {
 
   const MotionData & getMotionData() const { return motionData_; }
 
-  /**
-   * Kalman Filter update and prediction math lives in here.
-   */
-  KalmanFilter ekf_;
-
  private:
   // check whether the tracking toolbox was initialized or not (first measurement)
   bool is_initialized_;
