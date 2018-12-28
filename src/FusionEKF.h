@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include "Eigen/Dense"
-#include "kalman_filter.h"
 #include "SensorPackage.h"
 #include "tools.h"
 #include "MotionData.h"
