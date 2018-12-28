@@ -2,7 +2,6 @@
 #define RADARPACKAGE_H_
 
 #include "SensorPackage.h"
-#include "IKalmanFilter.h"
 
 class RadarPackage 
   : public SensorPackage

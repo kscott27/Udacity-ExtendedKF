@@ -2,7 +2,6 @@
 #define LIDARPACKAGE_H_
 
 #include "SensorPackage.h"
-#include "kalman_filter.h"
 
 class LidarPackage 
   : public SensorPackage
