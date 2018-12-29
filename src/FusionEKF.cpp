@@ -69,7 +69,7 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
   /**
    * Update
    */
-  // Depending on which descendent class of SensorPackage
+  // Depending on which descendent class of SensorPackage (Radar or Lidar)
   // is passed to this method, the appropriate virtual
   // updateState method of that class will be called by the compiler.
   sensorPack.updateState(motionData_);
