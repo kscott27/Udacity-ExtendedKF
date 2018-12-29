@@ -30,6 +30,7 @@ class FusionEKF {
 
  private:
   void updateTimeRelatedMatrices( const long long & t );
+  bool initialize( SensorPackage & sensorPack );
 
   // check whether the tracking toolbox was initialized or not (first measurement)
   bool is_initialized_;
@@ -40,17 +41,11 @@ class FusionEKF {
   // data object containing all matrices needed for kalman filter
   MotionData motionData_;
 
-  // tool object used to compute Jacobian and RMSE
-  Tools tools;
-  Eigen::MatrixXd R_laser_;
-  Eigen::MatrixXd R_radar_;
-  Eigen::MatrixXd H_laser_;
-  Eigen::MatrixXd Hj_;
+  
 
   // acceleration noise components
   float noise_ax_;
   float noise_ay_;
-
   uint16_t runs_;
 };
 

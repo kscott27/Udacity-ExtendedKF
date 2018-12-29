@@ -8,7 +8,18 @@ using Eigen::VectorXd;
  *   VectorXd or MatrixXd objects with zeros upon creation.
  */
 
+RadarPackage::RadarPackage() {
+  R_ = MatrixXd(3, 3);
+  //measurement covariance matrix - radar
+  R_ << 0.09, 0, 0,
+        0, 0.0009, 0,
+        0, 0, 0.09;
+
+  Hj_ = MatrixXd(3, 4);
+}
+
 void RadarPackage::updateState( MotionData & m ) {
+  Hj_ = tools_.CalculateJacobian(m.x_);
   float px = m.x_(0);
   float py = m.x_(1);
   float vx = m.x_(2);
@@ -25,8 +36,8 @@ void RadarPackage::updateState( MotionData & m ) {
   float phiError = y(1);
   angleJumpHandler( phiError );
   y(1) = phiError;
-  MatrixXd Hjt = m.Hj_.transpose();
-  MatrixXd S = m.Hj_ * m.P_ * Hjt + m.Rr_;
+  MatrixXd Hjt = Hj_.transpose();
+  MatrixXd S = Hj_ * m.P_ * Hjt + R_;
   MatrixXd Si = S.inverse();
   MatrixXd PHjt = m.P_ * Hjt;
   MatrixXd K = PHjt * Si;
@@ -35,7 +46,7 @@ void RadarPackage::updateState( MotionData & m ) {
   m.x_ = m.x_ + (K * y);
   long x_size = m.x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
-  m.P_ = (I - K * m.Hj_) * m.P_;
+  m.P_ = (I - K * Hj_) * m.P_;
 }
 
 void RadarPackage::initState( MotionData & m ) {

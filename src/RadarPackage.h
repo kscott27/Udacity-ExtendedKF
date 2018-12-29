@@ -2,12 +2,13 @@
 #define RADARPACKAGE_H_
 
 #include "SensorPackage.h"
+#include "tools.h"
 
 class RadarPackage 
   : public SensorPackage
 {
 public:
-  inline RadarPackage() { }
+  RadarPackage();
   virtual inline ~RadarPackage() { }
 
   //-- IKalmanFilter pure virtual interface
@@ -15,8 +16,14 @@ public:
   virtual void initState( MotionData & m );
 
 protected:
+  //-- methods
   void angleRangeHandler( float & a );
   void angleJumpHandler( float & a );
+
+  //-- members
+  Eigen::MatrixXd Hj_;
+  Eigen::MatrixXd R_;
+  Tools tools_;
 };
 
 #endif // RADARPACKAGE_H_

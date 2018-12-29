@@ -27,14 +27,6 @@ class MotionData {
   // process covariance matrix
   Eigen::MatrixXd Q_;
 
-  // measurement matrix
-  Eigen::MatrixXd H_;
-  Eigen::MatrixXd Hj_;
-
-  // measurement covariance matrix
-  Eigen::MatrixXd Rl_;
-  Eigen::MatrixXd Rr_;
-
   long long previousTimestamp_;
 };
 
