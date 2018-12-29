@@ -3,6 +3,11 @@
 
 #include "SensorPackage.h"
 
+// A subclass of SensorPackage. This package
+// contains raw sensor measurement from a lidar,
+// as well as a lidar-specific implementation of
+// the method required to initialize and update
+// a Kalman filter, given the MotionData.
 class LidarPackage 
   : public SensorPackage
 {

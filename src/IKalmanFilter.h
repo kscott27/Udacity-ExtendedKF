@@ -6,6 +6,12 @@
 #include "Eigen/Dense"
 #include "MotionData.h"
 
+// This is a pure virtual class. It implements a predict method
+// which can be overridden by child classes. It also has a pure virtual
+// update and init method, which must be overridden to be instantiable.
+// SensorPackage inherits from this class, yet saves the implementation
+// of these methods for specific sensors, which is why SensorPackage is
+// a pure virtual interface.
 class IKalmanFilter {
  public:
   /**
@@ -23,7 +29,7 @@ class IKalmanFilter {
    * using the process model
    * @param delta_T Time between k and k+1 in s
    */
-  void predict( MotionData & m );
+  virtual void predict( MotionData & m );
 
   /**
    * Updates the state by using standard Kalman Filter equations

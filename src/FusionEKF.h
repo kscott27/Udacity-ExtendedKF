@@ -6,7 +6,6 @@
 #include <vector>
 #include "Eigen/Dense"
 #include "SensorPackage.h"
-#include "tools.h"
 #include "MotionData.h"
 
 class FusionEKF {
@@ -40,8 +39,6 @@ class FusionEKF {
 
   // data object containing all matrices needed for kalman filter
   MotionData motionData_;
-
-  
 
   // acceleration noise components
   float noise_ax_;

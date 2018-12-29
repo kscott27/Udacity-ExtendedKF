@@ -37,6 +37,9 @@ void LidarPackage::updateState( MotionData & m ) {
   m.P_ = (I - K * H_) * m.P_;
 }
 
+// Initializes the state vector. This method is called
+// by FusionEKF::ProcessMeasurement if the state vector
+// has not yet been initialized
 void LidarPackage::initState( MotionData & m ) {
   m.x_ << rawMeasurements_[0],
           rawMeasurements_[1],

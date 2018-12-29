@@ -43,6 +43,12 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
   /**
    * Initialization
    */
+  // The initialize method will call the sensor-specific init method
+  // to initialize the state vector. It will then return true, which
+  // will cause the ProcessMeasurement method to return immediately
+  // on the first run. All subsequent calls to this method
+  // will return false, skipping the initialization step and moving on
+  // to the processing portion.
   if( initialize(sensorPack) )
     return;
 
@@ -51,11 +57,21 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
   /**
    * Prediction
    */
+  // Depending on which descendent class of SensorPackage
+  // is passed to this method, the appropriate virtual
+  // predict method of that class will be called by the compiler.
+  // The Radar and Lidar implementations of SensorPackage both
+  // just call the base version of predict (defined in SensorPackage.cpp),
+  // but other child classes have the ability to implement their own predict method,
+  // which could be useful if data in this phase needs to be linearized.
   sensorPack.predict(motionData_);
   
   /**
    * Update
    */
+  // Depending on which descendent class of SensorPackage
+  // is passed to this method, the appropriate virtual
+  // updateState method of that class will be called by the compiler.
   sensorPack.updateState(motionData_);
 
   // print the output
@@ -101,6 +117,9 @@ bool FusionEKF::initialize( SensorPackage & sensorPack ) {
     motionData_.x_ = VectorXd(4);
     motionData_.x_ << 1, 1, 1, 1;
 
+    // Depending on which descendent class of SensorPackage
+    // is passed to this method, the appropriate virtual
+    // initState method of that class will be called by the compiler.
     sensorPack.initState(motionData_);
 
     previous_timestamp_ = sensorPack.timestamp_;

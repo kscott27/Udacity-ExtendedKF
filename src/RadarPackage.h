@@ -4,6 +4,11 @@
 #include "SensorPackage.h"
 #include "tools.h"
 
+// A subclass of SensorPackage. This package
+// contains raw sensor measurement from a radar,
+// as well as a radar-specific implementation of
+// the method required to initialize and update
+// a Kalman filter, given the MotionData.
 class RadarPackage 
   : public SensorPackage
 {

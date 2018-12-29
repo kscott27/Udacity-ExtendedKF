@@ -49,6 +49,9 @@ void RadarPackage::updateState( MotionData & m ) {
   m.P_ = (I - K * Hj_) * m.P_;
 }
 
+// Initializes the state vector. This method is called
+// by FusionEKF::ProcessMeasurement if the state vector
+// has not yet been initialized
 void RadarPackage::initState( MotionData & m ) {
   float rho = rawMeasurements_[0];
   float phi = rawMeasurements_[1];
@@ -60,6 +63,9 @@ void RadarPackage::initState( MotionData & m ) {
   m.x_ << px, py, vx, vy;
 }
 
+// Converts angles from the simulator that are not between
+// pi and -pi so that they are the equivalent angle
+// between those bounds
 void RadarPackage::angleRangeHandler( float & a ) {
   while( a > 3.14 )
     a = a - 6.28;
@@ -67,6 +73,10 @@ void RadarPackage::angleRangeHandler( float & a ) {
     a = a + 6.28;
 }
 
+// In the case that the filter predicts a positive angle,
+// and the sensor reports a negative angle, this method
+// will convert the difference so that it is between the
+// bounds of pi and -pi
 void RadarPackage::angleJumpHandler( float & a ) {
   if( a > 3.14 )
     a = a - 6.28;

@@ -3,6 +3,9 @@
 
 #include "Eigen/Dense"
 
+// This class encapsulates the details of the Motion State,
+// and can be easily passed around to different classes
+// in order to manipulate that state via differing implementations.
 class MotionData {
  public:
   /**
