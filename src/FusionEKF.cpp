@@ -85,26 +85,7 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
     motionData_.x_ = VectorXd(4);
     motionData_.x_ << 1, 1, 1, 1;
 
-    if (sensorPack.sensor_type_ == MeasurementPackage::RADAR) {
-      // TODO: Convert radar from polar to cartesian coordinates 
-      //         and initialize state.
-      float rho = sensorPack.rawMeasurements_[0];
-      float phi = sensorPack.rawMeasurements_[1];
-      float rho_dot = sensorPack.rawMeasurements_[2];
-      float px = rho * cos(phi);
-      float py = rho * sin(phi);
-      float vx = rho_dot * cos(phi);
-      float vy = rho_dot * sin(phi);
-      motionData_.x_ << px, py, vx, vy;
-
-    }
-    else if (sensorPack.sensor_type_ == MeasurementPackage::LASER) {
-      // TODO: Initialize state.
-      motionData_.x_ << sensorPack.rawMeasurements_[0],
-                 sensorPack.rawMeasurements_[1],
-                 0,
-                 0;
-    }
+    sensorPack.initState(motionData_);
 
     previous_timestamp_ = sensorPack.timestamp_;
 
@@ -113,37 +94,14 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
     return;
   }
 
+  updateTimeRelatedMatrices( sensorPack.timestamp_ );
+  motionData_.Hj_ = tools.CalculateJacobian(motionData_.x_);
+
   /**
    * Prediction
    */
-
-  /**
-   * TODO: Update the state transition matrix F according to the new elapsed time.
-   * Time is measured in seconds.
-   * TODO: Update the process noise covariance matrix.
-   * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
-   */
-  float dt = (sensorPack.timestamp_ - previous_timestamp_) / 1000000.0;
-  previous_timestamp_ = sensorPack.timestamp_;
-
-  float dt_2 = dt * dt;
-  float dt_3 = dt_2 * dt;
-  float dt_4 = dt_3 * dt;
-
-  motionData_.F_(0,2) = dt;
-  motionData_.F_(1,3) = dt;
-
-  motionData_.Q_ = MatrixXd(4,4);
-  motionData_.Q_ <<  dt_4/4*noise_ax_, 0, dt_3/2*noise_ax_, 0,
-         0, dt_4/4*noise_ay_, 0, dt_3/2*noise_ay_,
-         dt_3/2*noise_ax_, 0, dt_2*noise_ax_, 0,
-         0, dt_3/2*noise_ay_, 0, dt_2*noise_ay_;
-
-  motionData_.Hj_ = tools.CalculateJacobian(motionData_.x_);
-
   sensorPack.predict(motionData_);
   
-
   /**
    * Update
    */
@@ -161,4 +119,28 @@ void FusionEKF::ProcessMeasurement( SensorPackage & sensorPack ) {
   
   cout << "x_ = " << motionData_.x_ << endl;
   // cout << "P_ = " << motionData_.P_ << endl;
+}
+
+void FusionEKF::updateTimeRelatedMatrices( const long long & t ) {
+  /**
+   * TODO: Update the state transition matrix F according to the new elapsed time.
+   * Time is measured in seconds.
+   * TODO: Update the process noise covariance matrix.
+   * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
+   */
+  float dt = (t - previous_timestamp_) / 1000000.0;
+  previous_timestamp_ = t;
+
+  float dt_2 = dt * dt;
+  float dt_3 = dt_2 * dt;
+  float dt_4 = dt_3 * dt;
+
+  motionData_.F_(0,2) = dt;
+  motionData_.F_(1,3) = dt;
+
+  motionData_.Q_ = MatrixXd(4,4);
+  motionData_.Q_ <<  dt_4/4*noise_ax_, 0, dt_3/2*noise_ax_, 0,
+         0, dt_4/4*noise_ay_, 0, dt_3/2*noise_ay_,
+         dt_3/2*noise_ax_, 0, dt_2*noise_ax_, 0,
+         0, dt_3/2*noise_ay_, 0, dt_2*noise_ay_;
 }

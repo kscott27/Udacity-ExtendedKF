@@ -10,7 +10,13 @@ public:
   inline RadarPackage() { }
   virtual inline ~RadarPackage() { }
 
+  //-- IKalmanFilter pure virtual interface
   virtual void updateState( MotionData & m );
+  virtual void initState( MotionData & m );
+
+protected:
+  void angleRangeHandler( float & a );
+  void angleJumpHandler( float & a );
 };
 
 #endif // RADARPACKAGE_H_

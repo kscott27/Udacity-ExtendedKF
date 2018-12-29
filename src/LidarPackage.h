@@ -10,7 +10,9 @@ public:
   inline LidarPackage() { }
   virtual inline ~LidarPackage() { }
 
+  //-- IKalmanFilter pure virtual interface
   virtual void updateState( MotionData & m );
+  virtual void initState( MotionData & m );
 };
 
 #endif // LIDARPACKAGE_H_

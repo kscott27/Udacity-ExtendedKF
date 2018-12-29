@@ -21,3 +21,10 @@ void LidarPackage::updateState( MotionData & m ) {
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
   m.P_ = (I - K * m.H_) * m.P_;
 }
+
+void LidarPackage::initState( MotionData & m ) {
+  m.x_ << rawMeasurements_[0],
+          rawMeasurements_[1],
+          0,
+          0;
+}

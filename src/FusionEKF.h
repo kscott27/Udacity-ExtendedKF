@@ -29,6 +29,8 @@ class FusionEKF {
   const MotionData & getMotionData() const { return motionData_; }
 
  private:
+  void updateTimeRelatedMatrices( const long long & t );
+
   // check whether the tracking toolbox was initialized or not (first measurement)
   bool is_initialized_;
 
